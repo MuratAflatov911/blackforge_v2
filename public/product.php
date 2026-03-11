@@ -148,6 +148,9 @@ render_header((string)$p['name'] . ' — BLACKFORGE');
           <input class="input" name="qty" type="number" min="1" value="1" style="max-width:140px">
         </div>
         <button class="btn" type="submit" <?= (int)$p['stock_qty'] <= 0 ? 'disabled' : '' ?>>Добавить в корзину</button>
+        <?php if (!$u): ?>
+          <div class="hint" style="margin-top:8px;">Заказ доступен только после входа в аккаунт.</div>
+        <?php endif; ?>
       </form>
 
       <div style="height:10px"></div>

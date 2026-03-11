@@ -28,7 +28,7 @@ if (empty($_SESSION['captcha_a']) || empty($_SESSION['captcha_b'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify_or_403();
 
-    $email = trim((string)($_POST['email'] ?? ''));
+    $email = mb_strtolower(trim((string)($_POST['email'] ?? '')));
     $fullName = trim((string)($_POST['full_name'] ?? ''));
     $birthDate = trim((string)($_POST['birth_date'] ?? ''));
     $pass = (string)($_POST['password'] ?? '');
@@ -159,4 +159,3 @@ render_header('Регистрация — BLACKFORGE');
 </section>
 
 <?php render_footer(); ?>
-

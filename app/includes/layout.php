@@ -47,7 +47,7 @@ function render_header(string $title = 'BLACKFORGE'): void
         </div>
     </div>
 
-    <main class="container">
+    <main class="container page-main">
         <?php if ($ok): ?>
             <div class="alert alert--ok"><?= e($ok) ?></div>
         <?php endif; ?>

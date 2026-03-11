@@ -67,6 +67,9 @@ function promo_apply(string $code, float $subtotal): array
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ((string)($_POST['action'] ?? '') === 'checkout') {
+        require_login();
+    }
     csrf_verify_or_403();
     $action = (string)($_POST['action'] ?? '');
 
@@ -116,13 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $u = current_user();
-        $customerEmail = $u ? (string)$u['email'] : trim((string)($_POST['email'] ?? ''));
-        $customerName = $u ? (string)$u['full_name'] : trim((string)($_POST['name'] ?? ''));
-        if (!filter_var($customerEmail, FILTER_VALIDATE_EMAIL) || $customerName === '') {
-            flash_set('err', 'Укажи имя и корректный email для заказа.');
-            header('Location: ' . base_url('cart.php'));
+        if (!$u) {
+            flash_set('err', 'Для оформления заказа нужно войти в аккаунт.');
+            header('Location: ' . base_url('login.php'));
             exit;
         }
+
+        $customerEmail = (string)$u['email'];
+        $customerName = (string)$u['full_name'];
 
         $subtotal = 0.0;
         foreach ($items as $it) $subtotal += (float)$it['product']['price'] * (int)$it['qty'];
@@ -297,19 +301,12 @@ render_header('Корзина — BLACKFORGE');
 
         <?php $u = current_user(); ?>
         <?php if (!$u): ?>
-          <div class="field">
-            <div class="label">Имя</div>
-            <input class="input" name="name" required>
-          </div>
-          <div class="field">
-            <div class="label">Email</div>
-            <input class="input" name="email" required>
-          </div>
+          <div class="alert">Для оформления заказа войдите в аккаунт. <a class="gold" href="<?= e(base_url('login.php')) ?>">Войти</a></div>
+          <button class="btn" type="button" onclick="location.href='<?= e(base_url('login.php')) ?>'" <?= $items ? '' : 'disabled' ?>>Войти для заказа</button>
         <?php else: ?>
           <div class="alert">Заказ оформится на: <span class="gold"><?= e((string)$u['full_name']) ?></span> (<?= e((string)$u['email']) ?>)</div>
+          <button class="btn" type="submit" <?= $items ? '' : 'disabled' ?>>Оформить заказ</button>
         <?php endif; ?>
-
-        <button class="btn" type="submit" <?= $items ? '' : 'disabled' ?>>Оформить заказ</button>
       </form>
     </div>
   </aside>

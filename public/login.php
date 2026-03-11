@@ -15,7 +15,7 @@ if (current_user()) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify_or_403();
-    $email = trim((string)($_POST['email'] ?? ''));
+    $email = mb_strtolower(trim((string)($_POST['email'] ?? '')));
     $pass = (string)($_POST['password'] ?? '');
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    session_regenerate_id(true);
     $_SESSION['user_id'] = (int)$u['id'];
     flash_set('ok', 'Добро пожаловать в BLACKFORGE.');
     header('Location: ' . base_url('index.php'));
