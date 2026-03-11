@@ -78,6 +78,7 @@ $bolts = db()->query("SELECT DISTINCT bolt_pattern FROM products ORDER BY bolt_p
 $colors = db()->query("SELECT DISTINCT color FROM products ORDER BY color")->fetchAll();
 
 render_header('BLACKFORGE — Каталог');
+render_breadcrumbs([['title' => 'Главная'],]);
 ?>
 
 <section class="hero">
@@ -229,7 +230,8 @@ render_header('BLACKFORGE — Каталог');
                   <?= e((string)$p['color']) ?> · <?= e((string)$p['material']) ?> · <?= e((string)$p['type']) ?>
                 </div>
                 <div class="row" style="margin-top:auto;">
-                  <div class="price"><span class="gold"><?= number_format((float)$p['price'], 0, '.', ' ') ?></span> ₽</div>
+                  <div class="price"><span class="gold"><?= number_format((float)$p['price'], 0, '.', ' ') ?></span> ₽ / диск</div>
+                  <div class="hint">Комплект: <?= number_format((float)$p['price'] * 4, 0, '.', ' ') ?> ₽</div>
                   <div class="hint"><?= (int)$p['stock_qty'] > 0 ? 'В наличии' : 'Нет' ?></div>
                 </div>
               </div>

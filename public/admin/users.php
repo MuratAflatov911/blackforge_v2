@@ -26,6 +26,7 @@ $stmt = db()->query('SELECT id, email, full_name, birth_date, role, created_at F
 $users = $stmt->fetchAll();
 
 render_header('Админ — пользователи');
+render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php')], ['title' => 'Пользователи']]);
 ?>
 
 <section class="hero">

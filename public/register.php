@@ -106,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 render_header('Регистрация — BLACKFORGE');
+render_breadcrumbs([['title' => 'Главная', 'url' => base_url('index.php')], ['title' => 'Регистрация']]);
 ?>
 
 <section class="hero">
@@ -115,8 +116,8 @@ render_header('Регистрация — BLACKFORGE');
   </div>
 </section>
 
-<section class="grid" style="grid-template-columns: 1fr;">
-  <div class="panel" style="max-width:620px; margin:0 auto;">
+<section class="grid grid--single">
+  <div class="panel" >
     <div class="panel__body">
       <form method="post" action="<?= e(base_url('register.php')) ?>">
         <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">

@@ -42,6 +42,7 @@ $itemsStmt->execute([$id]);
 $items = $itemsStmt->fetchAll();
 
 render_header('Админ — заказ #' . $id);
+render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php')], ['title' => 'Заказы', 'url' => base_url('admin/orders.php')], ['title' => 'Заказ #' . $id]]);
 ?>
 
 <section class="hero">
@@ -99,7 +100,6 @@ render_header('Админ — заказ #' . $id);
       <div class="row"><div class="hint">Подытог</div><div><?= number_format((float)$order['subtotal'], 0, '.', ' ') ?> ₽</div></div>
       <div class="row" style="margin-top:8px;"><div class="hint">Скидка</div><div>- <?= number_format((float)$order['discount'], 0, '.', ' ') ?> ₽</div></div>
       <div class="row" style="margin-top:8px;"><div class="hint">К оплате</div><div class="price"><span class="gold"><?= number_format((float)$order['total'], 0, '.', ' ') ?></span> ₽</div></div>
-      <div class="row" style="margin-top:8px;"><div class="hint">Промо</div><div class="hint"><?= e((string)($order['promo_code'] ?? '—')) ?></div></div>
 
       <div style="height:14px"></div>
 

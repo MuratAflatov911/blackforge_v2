@@ -170,6 +170,7 @@ if ($isEdit) {
 }
 
 render_header($isEdit ? 'Админ — редактировать товар' : 'Админ — новый товар');
+render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php')], ['title' => 'Товары', 'url' => base_url('admin/products.php')], ['title' => $isEdit ? 'Редактирование' : 'Новый товар']]);
 ?>
 
 <section class="hero">
@@ -179,7 +180,7 @@ render_header($isEdit ? 'Админ — редактировать товар' :
   </div>
 </section>
 
-<section class="grid">
+<section class="grid" style="grid-template-columns: 1.15fr .85fr;">
   <div class="panel">
     <div class="panel__head">
       <div class="row">
@@ -206,36 +207,36 @@ render_header($isEdit ? 'Админ — редактировать товар' :
         </div>
 
         <div class="row" style="gap:12px; align-items:flex-start;">
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Диаметр (R)</div>
             <input class="input" name="diameter_inch" value="<?= e((string)$p['diameter_inch']) ?>" required>
           </div>
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Разболтовка</div>
             <input class="input" name="bolt_pattern" value="<?= e((string)$p['bolt_pattern']) ?>" required>
           </div>
         </div>
 
         <div class="row" style="gap:12px; align-items:flex-start;">
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Ширина (J)</div>
             <input class="input" name="width_inch" value="<?= e((string)$p['width_inch']) ?>" required>
           </div>
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Вылет (ET)</div>
             <input class="input" name="et_offset" value="<?= e((string)$p['et_offset']) ?>" required>
           </div>
         </div>
 
         <div class="row" style="gap:12px; align-items:flex-start;">
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Материал</div>
             <select class="select" name="material">
               <option value="cast" <?= ((string)$p['material']) === 'cast' ? 'selected' : '' ?>>Литые</option>
               <option value="forged" <?= ((string)$p['material']) === 'forged' ? 'selected' : '' ?>>Кованые</option>
             </select>
           </div>
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Тип</div>
             <select class="select" name="type">
               <option value="sport" <?= ((string)$p['type']) === 'sport' ? 'selected' : '' ?>>Спортивные</option>
@@ -245,22 +246,22 @@ render_header($isEdit ? 'Админ — редактировать товар' :
         </div>
 
         <div class="row" style="gap:12px; align-items:flex-start;">
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Цвет</div>
             <input class="input" name="color" value="<?= e((string)$p['color']) ?>" required>
           </div>
-          <div class="field" style="flex:1;">
-            <div class="label">Цена</div>
+          <div class="field field--grow">
+            <div class="label">Цена за 1 диск</div>
             <input class="input" name="price" value="<?= e((string)$p['price']) ?>" required>
           </div>
         </div>
 
         <div class="row" style="gap:12px; align-items:flex-start;">
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Склад</div>
             <input class="input" name="stock_qty" value="<?= e((string)$p['stock_qty']) ?>" required>
           </div>
-          <div class="field" style="flex:1;">
+          <div class="field field--grow">
             <div class="label">Популярность</div>
             <input class="input" name="popularity" value="<?= e((string)($p['popularity'] ?? '0')) ?>">
           </div>

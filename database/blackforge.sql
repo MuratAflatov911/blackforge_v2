@@ -75,6 +75,31 @@ CREATE TABLE IF NOT EXISTS promo_codes (
   KEY idx_promo_active (active)
 ) ENGINE=InnoDB;
 
+
+
+CREATE TABLE IF NOT EXISTS site_content (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  content_key VARCHAR(120) NOT NULL,
+  value TEXT NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_site_content_key (content_key)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS product_reviews (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  product_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  rating TINYINT UNSIGNED NOT NULL,
+  body TEXT NOT NULL,
+  status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  moderated_at TIMESTAMP NULL DEFAULT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_reviews_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  CONSTRAINT fk_reviews_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  KEY idx_reviews_product_status (product_id, status),
+  KEY idx_reviews_status (status)
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS orders (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT UNSIGNED NULL,
@@ -111,6 +136,4 @@ VALUES
 ('Noir Lux R20', 'AURELIA', 'Люкс‑серия: строгая форма, металлический блеск, баланс веса и прочности.', 20.0, '5x114.3', 9.0, 40, 'forged', 'lux', 'Black Polished', 55990.00, 6, 90),
 ('Torque Edge R18', 'FERRON', 'Технологичная геометрия, идеально для динамичной посадки.', 18.0, '5x108', 8.0, 45, 'cast', 'sport', 'Silver', 21990.00, 18, 70);
 
-INSERT INTO promo_codes (code, discount_type, discount_value, active)
-VALUES ('BLACK10', 'percent', 10, 1);
 

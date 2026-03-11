@@ -38,6 +38,7 @@ $stmt->execute([$uid]);
 $items = $stmt->fetchAll();
 
 render_header('Избранное — BLACKFORGE');
+render_breadcrumbs([['title' => 'Главная', 'url' => base_url('index.php')], ['title' => 'Избранное']]);
 ?>
 
 <section class="hero">
@@ -47,7 +48,7 @@ render_header('Избранное — BLACKFORGE');
   </div>
 </section>
 
-<section class="grid" style="grid-template-columns: 1fr;">
+<section class="grid grid--single">
   <div class="panel">
     <div class="panel__body">
       <?php if (!$items): ?>
