@@ -29,8 +29,6 @@ function render_header(string $title = 'BLACKFORGE'): void
                     <span class="gold">BLACKFORGE</span>
                 </a>
 
-                <button class="mobile-menu-btn" type="button" id="mobileMenuBtn" aria-label="Открыть меню">☰</button>
-
                 <nav class="nav">
                     <a href="<?= e(base_url('index.php')) ?>">Каталог</a>
                     <a href="<?= e(base_url('about.php')) ?>">О нас</a>
@@ -52,28 +50,6 @@ function render_header(string $title = 'BLACKFORGE'): void
             </div>
         </div>
     </div>
-
-    <aside class="mobile-drawer" id="mobileDrawer">
-      <div class="mobile-drawer__panel">
-        <div class="row"><strong>Меню</strong><button class="tab" type="button" id="mobileMenuClose">✕</button></div>
-        <div class="mobile-drawer__links">
-          <a href="<?= e(base_url('index.php')) ?>">Каталог</a>
-          <a href="<?= e(base_url('about.php')) ?>">О нас</a>
-          <a href="<?= e(base_url('contacts.php')) ?>">Контакты</a>
-          <a href="<?= e(base_url('giveaways.php')) ?>">Розыгрыши</a>
-          <a href="<?= e(base_url('cart.php')) ?>">Корзина</a>
-          <a href="<?= e(base_url('favorites.php')) ?>">Избранное</a>
-          <?php if ($u): ?>
-            <a href="<?= e(base_url('profile.php')) ?>">Профиль</a>
-            <?php if (($u['role'] ?? '') === 'admin'): ?><a href="<?= e(base_url('admin/index.php')) ?>">Админ</a><?php endif; ?>
-            <a href="<?= e(base_url('logout.php')) ?>">Выйти</a>
-          <?php else: ?>
-            <a href="<?= e(base_url('login.php')) ?>">Войти</a>
-            <a href="<?= e(base_url('register.php')) ?>">Регистрация</a>
-          <?php endif; ?>
-        </div>
-      </div>
-    </aside>
 
     <main class="container page-main">
         <?php if ($ok): ?>
@@ -114,17 +90,6 @@ function render_footer(): void
             </div>
         </div>
     </footer>
-    <script>
-      (() => {
-        const btn = document.getElementById('mobileMenuBtn');
-        const close = document.getElementById('mobileMenuClose');
-        const drawer = document.getElementById('mobileDrawer');
-        if (!btn || !close || !drawer) return;
-        btn.addEventListener('click', () => drawer.classList.add('mobile-drawer--open'));
-        close.addEventListener('click', () => drawer.classList.remove('mobile-drawer--open'));
-        drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.classList.remove('mobile-drawer--open'); });
-      })();
-    </script>
     </body>
     </html>
     <?php
