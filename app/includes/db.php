@@ -42,6 +42,12 @@ function db(): PDO
 
 function db_bootstrap(PDO $pdo): void
 {
+
+    try {
+        $pdo->exec("ALTER TABLE users ADD COLUMN avatar_url VARCHAR(255) NULL AFTER role");
+    } catch (Throwable $e) {
+    }
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS site_content (
       id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
       content_key VARCHAR(120) NOT NULL,

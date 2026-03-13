@@ -13,7 +13,7 @@ function current_user(): ?array
         return null;
     }
     $id = (int)$_SESSION['user_id'];
-    $stmt = db()->prepare('SELECT id, email, full_name, birth_date, role, created_at FROM users WHERE id = ?');
+    $stmt = db()->prepare('SELECT id, email, full_name, birth_date, role, avatar_url, created_at FROM users WHERE id = ?');
     $stmt->execute([$id]);
     $u = $stmt->fetch();
     return $u ?: null;

@@ -29,6 +29,8 @@ function render_header(string $title = 'BLACKFORGE'): void
                     <span class="gold">BLACKFORGE</span>
                 </a>
 
+                <button class="mobile-menu-btn" type="button" id="mobileMenuBtn" aria-label="Открыть меню">☰</button>
+
                 <nav class="nav">
                     <a href="<?= e(base_url('index.php')) ?>">Каталог</a>
                     <a href="<?= e(base_url('about.php')) ?>">О нас</a>
@@ -37,6 +39,7 @@ function render_header(string $title = 'BLACKFORGE'): void
                     <a href="<?= e(base_url('cart.php')) ?>">Корзина</a>
                     <a href="<?= e(base_url('favorites.php')) ?>">Избранное</a>
                     <?php if ($u): ?>
+                        <a href="<?= e(base_url('profile.php')) ?>">Профиль</a>
                         <?php if (($u['role'] ?? '') === 'admin'): ?>
                             <a href="<?= e(base_url('admin/index.php')) ?>">Админ</a>
                         <?php endif; ?>
@@ -49,6 +52,28 @@ function render_header(string $title = 'BLACKFORGE'): void
             </div>
         </div>
     </div>
+
+    <aside class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer__panel">
+        <div class="row"><strong>Меню</strong><button class="tab" type="button" id="mobileMenuClose">✕</button></div>
+        <div class="mobile-drawer__links">
+          <a href="<?= e(base_url('index.php')) ?>">Каталог</a>
+          <a href="<?= e(base_url('about.php')) ?>">О нас</a>
+          <a href="<?= e(base_url('contacts.php')) ?>">Контакты</a>
+          <a href="<?= e(base_url('giveaways.php')) ?>">Розыгрыши</a>
+          <a href="<?= e(base_url('cart.php')) ?>">Корзина</a>
+          <a href="<?= e(base_url('favorites.php')) ?>">Избранное</a>
+          <?php if ($u): ?>
+            <a href="<?= e(base_url('profile.php')) ?>">Профиль</a>
+            <?php if (($u['role'] ?? '') === 'admin'): ?><a href="<?= e(base_url('admin/index.php')) ?>">Админ</a><?php endif; ?>
+            <a href="<?= e(base_url('logout.php')) ?>">Выйти</a>
+          <?php else: ?>
+            <a href="<?= e(base_url('login.php')) ?>">Войти</a>
+            <a href="<?= e(base_url('register.php')) ?>">Регистрация</a>
+          <?php endif; ?>
+        </div>
+      </div>
+    </aside>
 
     <main class="container page-main">
         <?php if ($ok): ?>
@@ -63,21 +88,14 @@ function render_header(string $title = 'BLACKFORGE'): void
 /** @param array<int,array{title:string,url?:string}> $items */
 function render_breadcrumbs(array $items): void
 {
-    if (!$items) {
-        return;
-    }
+    if (!$items) return;
     echo '<nav class="breadcrumbs" aria-label="Хлебные крошки">';
     foreach ($items as $i => $item) {
         $title = (string)($item['title'] ?? '');
         $url = (string)($item['url'] ?? '');
-        if ($i > 0) {
-            echo '<span class="breadcrumbs__sep">/</span>';
-        }
-        if ($url !== '' && $i < count($items) - 1) {
-            echo '<a class="breadcrumbs__link" href="' . e($url) . '">' . e($title) . '</a>';
-        } else {
-            echo '<span class="breadcrumbs__current">' . e($title) . '</span>';
-        }
+        if ($i > 0) echo '<span class="breadcrumbs__sep">/</span>';
+        if ($url !== '' && $i < count($items) - 1) echo '<a class="breadcrumbs__link" href="' . e($url) . '">' . e($title) . '</a>';
+        else echo '<span class="breadcrumbs__current">' . e($title) . '</span>';
     }
     echo '</nav>';
 }
@@ -89,8 +107,24 @@ function render_footer(): void
     <footer class="footer">
         <div class="container">
             <div>© <?= date('Y') ?> <span class="gold">BLACKFORGE</span> · Магазин дисков</div>
+            <div class="status-links">
+              <a class="tab" href="<?= e(base_url('status_404.php')) ?>">404</a>
+              <a class="tab" href="<?= e(base_url('status_301.php')) ?>">301</a>
+              <a class="tab" href="<?= e(base_url('status_302.php')) ?>">302</a>
+            </div>
         </div>
     </footer>
+    <script>
+      (() => {
+        const btn = document.getElementById('mobileMenuBtn');
+        const close = document.getElementById('mobileMenuClose');
+        const drawer = document.getElementById('mobileDrawer');
+        if (!btn || !close || !drawer) return;
+        btn.addEventListener('click', () => drawer.classList.add('mobile-drawer--open'));
+        close.addEventListener('click', () => drawer.classList.remove('mobile-drawer--open'));
+        drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.classList.remove('mobile-drawer--open'); });
+      })();
+    </script>
     </body>
     </html>
     <?php

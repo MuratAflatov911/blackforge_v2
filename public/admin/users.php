@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$stmt = db()->query('SELECT id, email, full_name, birth_date, role, created_at FROM users ORDER BY created_at DESC LIMIT 300');
+$stmt = db()->query('SELECT id, email, full_name, birth_date, role, avatar_url, created_at FROM users ORDER BY created_at DESC LIMIT 300');
 $users = $stmt->fetchAll();
 
 render_header('Админ — пользователи');
@@ -43,6 +43,8 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
         <a class="tab" href="<?= e(base_url('admin/products.php')) ?>">Товары</a>
         <a class="tab" href="<?= e(base_url('admin/orders.php')) ?>">Заказы</a>
         <a class="tab tab--active" href="<?= e(base_url('admin/users.php')) ?>">Пользователи</a>
+        <a class="tab" href="<?= e(base_url('admin/reviews.php')) ?>">Отзывы</a>
+        <a class="tab" href="<?= e(base_url('admin/content.php')) ?>">Контент</a>
       </div>
 
       <div style="height:12px"></div>
@@ -52,6 +54,7 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
           <tr>
             <th>ID</th>
             <th>Email</th>
+            <th>Аватар</th>
             <th>ФИО</th>
             <th>Дата рождения</th>
             <th>Роль</th>
@@ -64,6 +67,7 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
             <tr>
               <td><?= (int)$u['id'] ?></td>
               <td><?= e((string)$u['email']) ?></td>
+              <td><div style="width:44px;height:44px;border-radius:50%;overflow:hidden;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;"><?php if(!empty($u['avatar_url'])): ?><img src="<?= e((string)$u['avatar_url']) ?>" alt="" style="max-width:100%;max-height:100%;object-fit:contain;"><?php else: ?><span class="hint">—</span><?php endif; ?></div></td>
               <td><?= e((string)$u['full_name']) ?></td>
               <td class="hint"><?= e((string)$u['birth_date']) ?></td>
               <td><span class="badge"><?= e((string)$u['role']) ?></span></td>
@@ -82,7 +86,7 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
             </tr>
           <?php endforeach; ?>
           <?php if (!$users): ?>
-            <tr><td colspan="7" class="hint">Нет пользователей.</td></tr>
+            <tr><td colspan="8" class="hint">Нет пользователей.</td></tr>
           <?php endif; ?>
         </tbody>
       </table>

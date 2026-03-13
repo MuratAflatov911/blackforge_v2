@@ -101,7 +101,7 @@ if ($u) {
 $revStatsStmt = db()->prepare("SELECT COUNT(*) AS cnt, AVG(rating) AS avg_rating FROM product_reviews WHERE product_id=? AND status='approved'");
 $revStatsStmt->execute([$id]);
 $revStats = $revStatsStmt->fetch() ?: ['cnt' => 0, 'avg_rating' => 0];
-$reviewsStmt = db()->prepare("SELECT r.*, u.full_name FROM product_reviews r JOIN users u ON u.id=r.user_id WHERE r.product_id=? AND r.status='approved' ORDER BY r.created_at DESC");
+$reviewsStmt = db()->prepare("SELECT r.*, u.full_name, u.avatar_url FROM product_reviews r JOIN users u ON u.id=r.user_id WHERE r.product_id=? AND r.status='approved' ORDER BY r.created_at DESC");
 $reviewsStmt->execute([$id]);
 $reviews = $reviewsStmt->fetchAll();
 
@@ -141,7 +141,15 @@ render_breadcrumbs([
           <?php if (!$reviews): ?><div class="alert">Пока нет опубликованных отзывов.</div><?php endif; ?>
           <?php foreach ($reviews as $r): ?>
             <div class="alert">
-              <div class="row"><strong><?= e((string)$r['full_name']) ?></strong><span class="stars"><?= str_repeat('★', (int)$r['rating']) . str_repeat('☆', 5 - (int)$r['rating']) ?></span></div>
+              <div class="row">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:42px;height:42px;border-radius:50%;overflow:hidden;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;background:#f6f9ff;">
+                    <?php if (!empty($r['avatar_url'])): ?><img src="<?= e((string)$r['avatar_url']) ?>" alt="" style="max-width:100%;max-height:100%;object-fit:contain;"><?php else: ?><span class="hint">👤</span><?php endif; ?>
+                  </div>
+                  <strong><?= e((string)$r['full_name']) ?></strong>
+                </div>
+                <span class="stars"><?= str_repeat('★', (int)$r['rating']) . str_repeat('☆', 5 - (int)$r['rating']) ?></span>
+              </div>
               <div class="hint" style="margin-top:6px;"><?= nl2br(e((string)$r['body'])) ?></div>
             </div>
           <?php endforeach; ?>

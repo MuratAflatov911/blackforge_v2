@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../app/includes/auth.php';
 require_once __DIR__ . '/../../app/includes/db.php';
 require_once __DIR__ . '/../../app/includes/session.php';
 require_once __DIR__ . '/../../app/includes/images.php';
+require_once __DIR__ . '/../../app/includes/fitment.php';
 
 require_admin();
 ensure_session_started();
@@ -213,7 +214,11 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
           </div>
           <div class="field field--grow">
             <div class="label">Разболтовка</div>
-            <input class="input" name="bolt_pattern" value="<?= e((string)$p['bolt_pattern']) ?>" required>
+            <select class="select" name="bolt_pattern" required>
+              <?php foreach (common_bolt_patterns() as $bp): ?>
+                <option value="<?= e($bp) ?>" <?= ((string)$p['bolt_pattern']) === $bp ? 'selected' : '' ?>><?= e($bp) ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
         </div>
 

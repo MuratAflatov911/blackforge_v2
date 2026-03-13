@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
   birth_date DATE NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   role ENUM('user','admin') NOT NULL DEFAULT 'user',
+  avatar_url VARCHAR(255) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY uq_users_email (email),
   KEY idx_users_role (role)
