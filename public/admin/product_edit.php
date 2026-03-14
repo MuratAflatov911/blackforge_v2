@@ -316,8 +316,8 @@ render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php
           <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:10px;">
             <?php foreach ($images as $img): ?>
               <div class="panel" style="border-radius:18px;">
-                <div class="card__img" style="aspect-ratio: 16/11;">
-                  <img src="<?= e((string)$img['url']) ?>" alt="" style="object-fit:contain;">
+                <div class="card__img media-fixed">
+                  <img src="<?= e((string)$img['url']) ?>" alt="">
                 </div>
                 <div class="panel__body" style="padding:10px;">
                   <div class="row">

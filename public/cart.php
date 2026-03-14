@@ -140,8 +140,8 @@ render_breadcrumbs([
           <tr>
             <td>
               <div style="display:flex; gap:10px; align-items:center; min-width:260px;">
-                <div style="width:96px; height:68px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#f9fbff; display:flex; align-items:center; justify-content:center;">
-                  <?php if (!empty($p['image_url'])): ?><img src="<?= e((string)$p['image_url']) ?>" alt="" style="width:100%;height:100%;object-fit:contain;"><?php endif; ?>
+                <div class="card__img media-fixed--sm" style="width:96px; border:1px solid var(--line); border-radius:10px; background:#f9fbff;">
+                  <?php if (!empty($p['image_url'])): ?><img src="<?= e((string)$p['image_url']) ?>" alt="" ><?php endif; ?>
                 </div>
                 <div><div style="font-weight:700;"><a class="gold" href="<?= e(base_url('product.php?id=' . (int)$p['id'])) ?>"><?= e((string)$p['name']) ?></a></div><div class="hint">Комплект (4 шт): <?= number_format((float)$p['price'] * 4, 0, '.', ' ') ?> ₽</div></div>
               </div>

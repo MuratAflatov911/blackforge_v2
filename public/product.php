@@ -122,13 +122,13 @@ render_breadcrumbs([
 <section class="grid" style="grid-template-columns: 1.15fr .85fr;">
   <div class="panel">
     <div class="panel__body">
-      <div class="card__img" style="border:1px solid var(--line); border-radius:12px; overflow:hidden;">
+      <div class="card__img media-fixed--lg" style="border:1px solid var(--line); border-radius:12px; overflow:hidden;">
         <?php if ($main !== ''): ?><img src="<?= e($main) ?>" alt="<?= e((string)$p['name']) ?>"><?php else: ?><div class="hint">Нет изображения</div><?php endif; ?>
       </div>
       <?php if ($images): ?>
         <div class="row" style="margin-top:12px;justify-content:flex-start;">
           <?php foreach ($images as $img): ?>
-            <a class="tab" href="<?= e(base_url('product.php?id=' . $id . '&img=' . (int)$img['id'])) ?>" style="padding:0; overflow:hidden; width:96px; height:68px;"><img src="<?= e((string)$img['url']) ?>" alt="" style="width:100%; height:100%; object-fit:contain;"></a>
+            <a class="tab" href="<?= e(base_url('product.php?id=' . $id . '&img=' . (int)$img['id'])) ?>" style="padding:0; overflow:hidden; width:96px;"><img src="<?= e((string)$img['url']) ?>" alt="" ></a>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
