@@ -4,10 +4,11 @@ RewriteEngine On
 RewriteRule ^301/?$ /status_301.php [L]
 RewriteRule ^302/?$ /status_302.php [L]
 
-# Keep existing files/directories working
+# Existing files/directories
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Any unknown path -> real 404 page
+# Unknown routes -> 404
+RewriteRule . - [R=404,L]
 ErrorDocument 404 /status_404.php

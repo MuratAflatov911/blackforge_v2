@@ -85,8 +85,8 @@ function render_footer(): void
             <div>© <?= date('Y') ?> <span class="gold">BLACKFORGE</span> · Магазин дисков</div>
             <div class="status-links">
               <a class="tab" href="<?= e(base_url('status_404.php')) ?>">404</a>
-              <a class="tab" href="<?= e(base_url('status_301.php')) ?>">301</a>
-              <a class="tab" href="<?= e(base_url('status_302.php')) ?>">302</a>
+              <a class="tab" href="<?= e(base_url('301')) ?>">301</a>
+              <a class="tab" href="<?= e(base_url('302')) ?>">302</a>
             </div>
         </div>
     </footer>
