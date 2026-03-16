@@ -38,6 +38,7 @@ $stmt->execute($params);
 $rows = $stmt->fetchAll();
 
 render_header('Админ — товары');
+render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php')], ['title' => 'Товары']]);
 ?>
 
 <section class="hero">
@@ -54,6 +55,8 @@ render_header('Админ — товары');
         <a class="tab tab--active" href="<?= e(base_url('admin/products.php')) ?>">Товары</a>
         <a class="tab" href="<?= e(base_url('admin/orders.php')) ?>">Заказы</a>
         <a class="tab" href="<?= e(base_url('admin/users.php')) ?>">Пользователи</a>
+        <a class="tab" href="<?= e(base_url('admin/reviews.php')) ?>">Отзывы</a>
+        <a class="tab" href="<?= e(base_url('admin/content.php')) ?>">Контент</a>
       </div>
 
       <div style="display:flex; gap:10px; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap;">

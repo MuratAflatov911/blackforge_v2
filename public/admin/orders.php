@@ -27,6 +27,7 @@ $stmt = db()->query('SELECT * FROM orders ORDER BY created_at DESC LIMIT 200');
 $orders = $stmt->fetchAll();
 
 render_header('Админ — заказы');
+render_breadcrumbs([['title' => 'Админ', 'url' => base_url('admin/index.php')], ['title' => 'Заказы']]);
 ?>
 
 <section class="hero">
@@ -43,6 +44,8 @@ render_header('Админ — заказы');
         <a class="tab" href="<?= e(base_url('admin/products.php')) ?>">Товары</a>
         <a class="tab tab--active" href="<?= e(base_url('admin/orders.php')) ?>">Заказы</a>
         <a class="tab" href="<?= e(base_url('admin/users.php')) ?>">Пользователи</a>
+        <a class="tab" href="<?= e(base_url('admin/reviews.php')) ?>">Отзывы</a>
+        <a class="tab" href="<?= e(base_url('admin/content.php')) ?>">Контент</a>
       </div>
 
       <div style="height:12px"></div>
@@ -54,8 +57,7 @@ render_header('Админ — заказы');
             <th>Дата</th>
             <th>Клиент</th>
             <th>Сумма</th>
-            <th>Промо</th>
-            <th>Статус</th>
+                        <th>Статус</th>
             <th></th>
           </tr>
         </thead>
@@ -69,8 +71,7 @@ render_header('Админ — заказы');
                 <div class="hint"><?= e((string)$o['customer_email']) ?></div>
               </td>
               <td><span class="gold"><?= number_format((float)$o['total'], 0, '.', ' ') ?></span> ₽</td>
-              <td class="hint"><?= e((string)($o['promo_code'] ?? '—')) ?></td>
-              <td><span class="badge"><?= e((string)$o['status']) ?></span></td>
+                            <td><span class="badge"><?= e((string)$o['status']) ?></span></td>
               <td style="white-space:nowrap;">
                 <a class="tab tab--active" href="<?= e(base_url('admin/order_view.php?id=' . (int)$o['id'])) ?>">Открыть</a>
                 <form method="post" action="<?= e(base_url('admin/orders.php')) ?>" style="display:inline;">

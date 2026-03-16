@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Pretty status redirect endpoints
+RewriteRule ^301/?$ /status_301.php [L]
+RewriteRule ^302/?$ /status_302.php [L]
+
+# Existing files/directories go as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Any unknown route should return real 404 with custom page
+RewriteRule ^status_404\.php$ - [L]
+RewriteRule . /status_404.php [L,R=404]
+
+ErrorDocument 404 /status_404.php

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/includes/layout.php';
 require_once __DIR__ . '/../app/includes/db.php';
+require_once __DIR__ . '/../app/includes/fitment.php';
 require_once __DIR__ . '/../app/includes/view.php';
 
 // Filters
@@ -74,10 +75,11 @@ $products = $stmt->fetchAll();
 
 // Filter options (simple)
 $brands = db()->query("SELECT DISTINCT brand FROM products ORDER BY brand")->fetchAll();
-$bolts = db()->query("SELECT DISTINCT bolt_pattern FROM products ORDER BY bolt_pattern")->fetchAll();
+$bolts = common_bolt_patterns();
 $colors = db()->query("SELECT DISTINCT color FROM products ORDER BY color")->fetchAll();
 
 render_header('BLACKFORGE — Каталог');
+render_breadcrumbs([['title' => 'Главная'],]);
 ?>
 
 <section class="hero">
@@ -115,7 +117,7 @@ render_header('BLACKFORGE — Каталог');
           <div class="label">Разболтовка</div>
           <select class="select" name="bolt">
             <option value="">Любая</option>
-            <?php foreach ($bolts as $b): $v = (string)$b['bolt_pattern']; ?>
+            <?php foreach ($bolts as $v): ?>
               <option value="<?= e($v) ?>" <?= $v === $bolt ? 'selected' : '' ?>><?= e($v) ?></option>
             <?php endforeach; ?>
           </select>
@@ -207,7 +209,13 @@ render_header('BLACKFORGE — Каталог');
     </div>
     <div class="panel__body">
       <?php if (!$products): ?>
-        <div class="alert">Ничего не найдено — попробуй ослабить фильтры.</div>
+        <div class="alert">
+          <?php if ($bolt !== ''): ?>
+            На складе нет дисков с разболтовкой <strong><?= e($bolt) ?></strong>.
+          <?php else: ?>
+            Ничего не найдено — попробуй ослабить фильтры.
+          <?php endif; ?>
+        </div>
       <?php else: ?>
         <div class="products">
           <?php foreach ($products as $p): ?>
@@ -229,7 +237,8 @@ render_header('BLACKFORGE — Каталог');
                   <?= e((string)$p['color']) ?> · <?= e((string)$p['material']) ?> · <?= e((string)$p['type']) ?>
                 </div>
                 <div class="row" style="margin-top:auto;">
-                  <div class="price"><span class="gold"><?= number_format((float)$p['price'], 0, '.', ' ') ?></span> ₽</div>
+                  <div class="price"><span class="gold"><?= number_format((float)$p['price'], 0, '.', ' ') ?></span> ₽ / диск</div>
+                  <div class="hint">Комплект: <?= number_format((float)$p['price'] * 4, 0, '.', ' ') ?> ₽</div>
                   <div class="hint"><?= (int)$p['stock_qty'] > 0 ? 'В наличии' : 'Нет' ?></div>
                 </div>
               </div>
